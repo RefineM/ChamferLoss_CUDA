@@ -1,10 +1,29 @@
 # ChamferLoss_CUDA
-A pytorch cuda extension for chamfer loss 
+
+![Python](https://img.shields.io/badge/python-3.8+-blue)
+![PyTorch Version](https://img.shields.io/badge/PyTorch-2.0+-EE4C2C)
+![CUDA Version](https://img.shields.io/badge/CUDA-11.8+-76B900)
+![Test Status](https://img.shields.io/badge/test_status-❌_failed-yellow)
+
+A pytorch cuda extension for chamfer loss. 
 
 ## usage
-* dependency: `pytorch-cuda`   
-* install: `pip install .`
-* test script: `example.py`
+### for windows:
+* install visual studio
+* conda virtual environment setup:
+```
+conda env create -f env.yaml
+
+```
+* build extension: 
+```
+pip install .
+pip install -e . # for development
+```
+* run test script:
+```
+CUDA_VISIBLE_DEVICES=0 python example.py
+```
 
 ## theory
 *  $Q = \{[q_i]\}_{i=1}^N$ 
