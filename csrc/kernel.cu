@@ -11,7 +11,7 @@
 __global__ void knn_forward_kernel(
     const float* __restrict__ query, // [N,3]
     const float* __restrict__ ref,   // [M,3]
-    long long* __restrict__ idx_out, // [N]
+    int64_t* __restrict__ idx_out, // [N]
     float* __restrict__ dist_out,    // [N]
     int N,
     int M,
@@ -91,7 +91,7 @@ __global__ void knn_forward_kernel(
 __global__ void knn_backward_kernel(
     const float* __restrict__ query,    // [N,3]
     const float* __restrict__ ref,      // [M,3]
-    const long long* __restrict__ idx,  // [N]
+    const int64_t* __restrict__ idx,  // [N]
     float* __restrict__ grad_query,     // [N,3]
     float scale,                        // scalar = grad_output / N
     int N

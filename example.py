@@ -14,6 +14,7 @@ class ChamferFunction(Function):
         # query: [N,3], ref: [M,3]
         assert query.device.type == 'cuda' and ref.device.type == 'cuda'
         idx, dist = chamferloss_cuda.knn_forward(query.contiguous(), ref.contiguous(), int(K))
+        print(idx)
         # idx: LongTensor [N], dist: FloatTensor [N] (squared dist)
         ctx.save_for_backward(query, ref, idx)
         return dist.mean()  # scalar
@@ -40,9 +41,15 @@ class ChamferLoss(nn.Module):
 
 if __name__ == '__main__':
     
-    torch.manual_seed(0)
-    N = 100000   # query count for test 
-    M = 100000   # ref count
+    print(torch.cuda.is_available())
+    print(torch.cuda.current_device())
+    print(torch.cuda.get_device_name(0))
+    print(torch.__version__)       
+    print(torch.version.cuda)       
+
+    torch.manual_seed(42)
+    N = 100_0000   # query count for test 
+    M = 100_0000   # ref count
     ref = torch.rand(M,3, device='cuda', dtype=torch.float32)
     query = torch.rand(N,3, device='cuda', dtype=torch.float32, requires_grad=True)
 
