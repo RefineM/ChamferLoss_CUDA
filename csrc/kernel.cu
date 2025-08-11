@@ -4,7 +4,7 @@
 #include <vector>
 #include <float.h>
 
-#define TILE_SIZE 256   // shared memory tile size
+#define TILE_SIZE 1024   // shared memory tile size
 #define MAX_K 1          // max number of neighbors to find
 
 // forward kernel: find top-K nearest neighbors for each query point
@@ -79,6 +79,27 @@ __global__ void knn_forward_kernel(
         }
         __syncthreads();
     }
+
+//     for (int r = 0; r < M; ++r) {
+//         float rx = ref[r * 3 + 0];
+//         float ry = ref[r * 3 + 1];
+//         float rz = ref[r * 3 + 2];
+//         float dx = qx - rx;
+//         float dy = qy - ry;
+//         float dz = qz - rz;
+//         float d2 = dx*dx + dy*dy + dz*dz;
+
+//         if (d2 < best_dists[Keff - 1] || (d2 == best_dists[Keff - 1] && r < best_idxs[Keff - 1])) {
+//             int pos = Keff - 1;
+//             while (pos > 0 && (d2 < best_dists[pos - 1] ||(d2 == best_dists[pos - 1] && r < best_idxs[pos - 1]))) {
+//                 best_dists[pos] = best_dists[pos - 1];
+//                 best_idxs[pos] = best_idxs[pos - 1];
+//                 pos--;
+//             }
+//             best_dists[pos] = d2;
+//             best_idxs[pos] = r;
+//         }
+// }
 
     // write out the minimum distance and its index 
     // TODO: return top-K

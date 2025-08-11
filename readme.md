@@ -3,24 +3,21 @@
 ![Python](https://img.shields.io/badge/python-3.8+-blue)
 ![PyTorch Version](https://img.shields.io/badge/PyTorch-2.0+-EE4C2C)
 ![CUDA Version](https://img.shields.io/badge/CUDA-11.8+-76B900)
-![Test Status](https://img.shields.io/badge/test_status-❌_failed-yellow)
+![Test Status](https://img.shields.io/badge/test_status-succeed-green)
 
 A pytorch cuda extension for chamfer loss. 
 
 ## usage
-### for windows:
-* install visual studio
-* conda virtual environment setup:
+conda virtual environment setup:
 ```
 conda env create -f env.yaml
-
 ```
-* build extension: 
+build extension: 
 ```
 pip install .
 pip install -e . # for development
 ```
-* run test script:
+run test script:
 ```
 CUDA_VISIBLE_DEVICES=0 python example.py
 ```
@@ -43,8 +40,21 @@ $$
 $$
 
 ## TODO
+[√]  top-1 chamferloss  
+[ ]  top-k chamferloss
 
 
+## test 
+data: ref_tensor: `[5_0000,3]`, query_tensor: `[5_0000,3]`, float32, [-1,1]
 
-## test
-* data: ref_tensor: `[N,3]`, query_tensor: `[M,3]`
+|method|time(s)|memory size|result|
+| --- | --- | --- | --- |
+|torch.cdist()|0.09895||0.0010496085742488503 |
+|ours.knn_forward()|0.00012||0.0010516365291550756|
+
+data: ref_tensor: `[1_000_000,3]`, query_tensor: `[1_000_000,3]`, float32, [-1,1]
+
+|method|forward time|gpu memory(MB)|result|
+| --- | --- | --- | --- |
+|torch.cdist()| - |OOM  |- |
+|ours.forward_kernel()|0.00012|496|0.0001400598557665944 |

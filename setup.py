@@ -3,6 +3,9 @@ from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 
 setup(
     name='chamferloss_cuda',
+    author='Junfan Wang',
+    author_email='1215718263@qq.com',
+    version='1.0.0',
     ext_modules=[
         CUDAExtension(
             name='chamferloss_cuda',
